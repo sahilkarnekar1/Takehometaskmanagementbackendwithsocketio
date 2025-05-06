@@ -51,6 +51,7 @@ exports.getNonMembers = async (req, res) => {
     if (!team) return res.status(404).send('Team not found');
 
     const nonMembers = await User.find({
+      teamLeader: req.user.id,
       _id: { $nin: team.members },
       role: 'Member'
     }).select('_id name email');
